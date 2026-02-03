@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encrypted Letter 🔐</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Poppins,system-ui,sans-serif;
+}
+
+body{
+  height:100vh;
+  background:linear-gradient(135deg,#ffffff,#ffd6e8);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+
+.container{
+  text-align:center;
+  padding:20px;
+}
+
+/* Hint text */
+.hint{
+  margin-bottom:15px;
+  color:#ff4d6d;
+  font-size:1rem;
+}
+
+/* Letter */
+.letter{
+  width:220px;
+  height:150px;
+  background:white;
+  border:2px solid #ff8fab;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:2rem;
+  cursor:grab;
+  position:absolute;
+  z-index:2;
+  box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+
+/* Key */
+.key{
+  font-size:2rem;
+  display:none;
+  cursor:pointer;
+  margin-top:180px;
+  animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.2);}
+  100%{transform:scale(1);}
+}
+
+/* Congrats text */
+#found{
+  display:none;
+  margin-top:10px;
+  color:#ff3d6d;
+  font-weight:600;
+}
+
+/* Message */
+#message{
+  max-width:360px;
+  margin-top:20px;
+  color:#ff3d6d;
+  line-height:1.6;
+  display:none;
+}
+
+/* Password popup */
+.popup{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+  display:none;
+  align-items:center;
+  justify-content:center;
+}
+
+.box{
+  background:white;
+  padding:20px;
+  border-radius:12px;
+  text-align:center;
+  width:260px;
+}
+
+input{
+  padding:10px;
+  width:100%;
+  margin-top:10px;
+  font-size:1rem;
+}
+
+button{
+  margin-top:12px;
+  padding:10px 20px;
+  border:none;
+  background:#ff5c8a;
+  color:white;
+  border-radius:20px;
+  font-size:1rem;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h2>🔐 Encrypted Letter</h2>
+  <p class="hint">Find the key to read the letter 💗</p>
+
+  <div class="letter" id="letter">💌</div>
+  <div class="key" id="key">🗝️</div>
+
+  <div id="found">🎉 Congrats! You found the key!</div>
+
+  <div id="message">
+    <p><strong>This has always been my biggest dream.</strong></p>
+    <p>
+      I never imagined that I could truly be with you,  
+      and yet here we are — together.
+    </p>
+    <p>
+      It feels so good to be with you…  
+      you know that, right?
+    </p>
+    <p>
+      Deep down, I’ve always known  
+      that you are the one for me.
+    </p>
+    <p><strong>Forever — with you, and only you ♾️❤️</strong></p>
+  </div>
+</div>
+
+<!-- Password Popup -->
+<div class="popup" id="popup">
+  <div class="box">
+    <h3>Enter Password 🔑</h3>
+    <input type="password" id="password" placeholder="••••">
+    <button onclick="unlock()">Unlock</button>
+  </div>
+</div>
+
+<script>
+const letter = document.getElementById('letter');
+const key = document.getElementById('key');
+const popup = document.getElementById('popup');
+const message = document.getElementById('message');
+const found = document.getElementById('found');
+
+let isDragging = false;
+let keyFound = false;
+
+/* Drag logic */
+letter.addEventListener('mousedown', startDrag);
+letter.addEventListener('touchstart', startDrag);
+
+document.addEventListener('mousemove', drag);
+document.addEventListener('touchmove', drag);
+
+document.addEventListener('mouseup', stopDrag);
+document.addEventListener('touchend', stopDrag);
+
+function startDrag(){
+  isDragging = true;
+}
+
+function drag(e){
+  if(!isDragging) return;
+
+  const x = e.touches ? e.touches[0].clientX : e.clientX;
+  const y = e.touches ? e.touches[0].clientY : e.clientY;
+
+  letter.style.left = x - 110 + 'px';
+  letter.style.top = y - 75 + 'px';
+
+  if(!keyFound){
+    key.style.display = 'block';
+  }
+}
+
+function stopDrag(){
+  isDragging = false;
+}
+
+/* Key click */
+key.onclick = ()=>{
+  keyFound = true;
+  found.style.display = 'block';
+  popup.style.display = 'flex';
+};
+
+/* Password unlock */
+function unlock(){
+  const pass = document.getElementById('password').value;
+  if(pass === '2210'){
+    popup.style.display = 'none';
+    message.style.display = 'block';
+    letter.style.display = 'none';
+    key.style.display = 'none';
+    found.style.display = 'none';
+  }else{
+    alert('Wrong password 💔 Try again');
+  }
+}
+</script>
+
+</body>
+</html>

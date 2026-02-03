@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Letters 💌</title>
+
+<style>
+body{
+  margin:0;height:100vh;display:flex;
+  align-items:center;justify-content:center;
+  background:white;font-family:Poppins;overflow:hidden;
+}
+.page{animation:slide 1s ease forwards;}
+@keyframes slide{
+  from{transform:translateX(100%);}
+  to{transform:translateX(0);}
+}
+.letters{display:flex;gap:30px;}
+.box{
+  width:90px;height:120px;border:2px solid pink;
+  display:flex;align-items:center;justify-content:center;
+  font-size:2rem;cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+<div class="page">
+  <div class="letters">
+    <div class="box" onclick="go('letter1.html')">💌</div>
+    <div class="box" onclick="go('letter2.html')">🎵</div>
+    <div class="box" onclick="go('letter3.html')">🎂</div>
+  </div>
+</div>
+
+<script>
+function go(p){
+  document.body.style.animation='slide 1s reverse';
+  setTimeout(()=>location.href=p,800);
+}
+</script>
+</body>
+</html>
